@@ -12,7 +12,7 @@ export class AccountTypeDefinition implements AccountTypeDefinitionInterface {
         this._accountType = accountType;
         this._withdrawLimit = withdrawLimit;
     }
-    public get accountType(){
+    public get accountType() {
         return this._accountType;
     }
     public get withdrawLimit() {
