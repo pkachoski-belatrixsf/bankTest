@@ -1,4 +1,4 @@
-import { BankAccountInterface } from "../model/BankAccount";
+import { BankAccountInterface } from "../../bankAccount/model/BankAccount";
 
 export interface UserInterface {
     id: string;
@@ -10,7 +10,7 @@ export interface UserInterface {
 export class User implements UserInterface {
     private _id: string;
     private _bankAccount: BankAccountInterface;
-    constructor(id:string, bankAccount:BankAccountInterface) {
+    constructor(id: string, bankAccount: BankAccountInterface) {
         this._id = id;
         this._bankAccount = bankAccount;
     }
@@ -20,10 +20,10 @@ export class User implements UserInterface {
     public withdrawFundsFromAccount(amount: number) {
         this._bankAccount.withdrawFunds(amount);
     }
-    public get id() : string {
+    public get id(): string {
         return this._id;
     }
-    public get bankAccount() : BankAccountInterface {
+    public get bankAccount(): BankAccountInterface {
         return this._bankAccount;
     }
 }
