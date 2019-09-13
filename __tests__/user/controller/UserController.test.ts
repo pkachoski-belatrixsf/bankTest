@@ -1,41 +1,32 @@
 import { UserController } from "../../../src/user/controller/UserController";
-import { UserServiceInterface } from "../../../src/user/service/UserService";
-import { UserInterface } from "../../../src/user/model/User";
-import { BankAccountInterface } from "../../../src/bankAccount/model/BankAccount";
+import { Currency } from "../../../src/common/model/Currency";
+import { getUserMockConfig, getUserServiceMockConfig } from "../../utils/TestUtils";
 
-let userInstance;
-let user;
-let bank;
+let userMocked;
+let defUser;
+let userServiceInstance;
+let userController: UserController;
 beforeEach(() => {
-    const BankAccountMock = jest.fn<BankAccountInterface, []>();
-    user = {
-        id: "",
-        bankAccount: new BankAccountMock(),
-        depositFundsIntoAccount: jest.fn(),
-        withdrawFundsFromAccount: jest.fn(),
-    };
-    const UserMock = jest.fn<UserInterface, []>(() => (user));
-    const UserServiceMock = jest.fn<UserServiceInterface, []>(() => ({
-        findUserById: UserMock
-    }));
-    userInstance = new UserServiceMock();
-    bank = new UserController(userInstance);
+    ({ mock: userMocked, user: defUser } = getUserMockConfig({ id: "Federico" }));
+    const { mock: UserServiceMock } = getUserServiceMockConfig({ expectedUserMock: userMocked });
+    userServiceInstance = new UserServiceMock();
+    userController = new UserController(userServiceInstance);
 });
 
 describe("User Controller Tests", () => {
-    test('Expects user controller to do user funds deposit', () => {     
+    test('Expects user controller to do user funds deposit', () => {
         const userId = "Federico";
-        const amount = 1000;
-        bank.doUserDeposit(userId, amount);
-        expect(userInstance.findUserById).toHaveBeenCalledWith(userId);
-        expect(user.depositFundsIntoAccount).toHaveBeenCalledWith(amount);
+        const amount = new Currency(1000);
+        userController.doUserDeposit(userId, amount);
+        expect(userServiceInstance.findUserById).toHaveBeenCalledWith(userId);
+        expect(defUser.depositFundsIntoAccount).toHaveBeenCalledWith(amount);
     });
 
-    test('Expects user controller to do user funds withdraw', () => {     
+    test('Expects user controller to do user funds withdraw', () => {
         const userId = "Federico";
-        const amount = 1000;
-        bank.doUserWithdraw(userId, amount);
-        expect(userInstance.findUserById).toHaveBeenCalledWith(userId);
-        expect(user.withdrawFundsFromAccount).toHaveBeenCalledWith(amount);
+        const amount = new Currency(1000);
+        userController.doUserWithdraw(userId, amount);
+        expect(userServiceInstance.findUserById).toHaveBeenCalledWith(userId);
+        expect(defUser.withdrawFundsFromAccount).toHaveBeenCalledWith(amount);
     });
 });

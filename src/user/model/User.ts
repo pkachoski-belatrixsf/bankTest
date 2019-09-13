@@ -1,10 +1,11 @@
 import { BankAccountInterface } from "../../bankAccount/model/BankAccount";
+import { CurrencyInterface } from "../../common/model/Currency";
 
 export interface UserInterface {
     id: string;
     bankAccount: BankAccountInterface;
-    depositFundsIntoAccount(amount: number): void;
-    withdrawFundsFromAccount(amount: number): void;
+    depositFundsIntoAccount(amount: CurrencyInterface): void;
+    withdrawFundsFromAccount(amount: CurrencyInterface): void;
 }
 
 export class User implements UserInterface {
@@ -14,10 +15,10 @@ export class User implements UserInterface {
         this._id = id;
         this._bankAccount = bankAccount;
     }
-    public depositFundsIntoAccount(amount: number) {
+    public depositFundsIntoAccount(amount: CurrencyInterface) {
         this._bankAccount.depositFunds(amount);
     }
-    public withdrawFundsFromAccount(amount: number) {
+    public withdrawFundsFromAccount(amount: CurrencyInterface) {
         this._bankAccount.withdrawFunds(amount);
     }
     public get id(): string {

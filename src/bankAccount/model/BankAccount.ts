@@ -1,6 +1,8 @@
+import { CurrencyInterface } from "../../common/model/Currency";
+
 export interface BankAccountInterface {
-    depositFunds(amount: number): void;
-    withdrawFunds(amount: number): void;
+    depositFunds(amount: CurrencyInterface): void;
+    withdrawFunds(amount: CurrencyInterface): void;
     balance: number;
 }
 
@@ -9,20 +11,14 @@ export class BankAccount implements BankAccountInterface {
     constructor() {
         this._balance = 0;
     }
-    public depositFunds(amount: number): void {
-        if (amount <= 0) {
-            throw "Invalid Value: you can only deposit positive amounts";
-        }
-        this._balance += amount;
+    public depositFunds(amount: CurrencyInterface): void {
+        this._balance += amount.value;
     }
-    public withdrawFunds(amount: number): void {
-        if (amount <= 0) {
-            throw "Invalid Value: you can only withdraw positive amounts";
+    public withdrawFunds(amount: CurrencyInterface): void {
+        if (this._balance < amount.value) {
+            throw Error("Error Insufficient funds");
         }
-        if (this._balance < amount) {
-            throw "Error Insufficient funds";
-        }
-        this._balance -= amount;
+        this._balance -= amount.value;
     }
     public get balance(): number {
         return this._balance;
