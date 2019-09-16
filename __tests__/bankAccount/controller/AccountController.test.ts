@@ -24,6 +24,7 @@ describe("Account Controller tests", () => {
         accountController.doFundsTransferBetweenUsers(fromUserId, toUserId, amount);
         expect(userServiceInstance.findUserById).toHaveBeenCalledWith(fromUserId);
         expect(userServiceInstance.findUserById).toHaveBeenCalledWith(toUserId);
+        expect(userServiceInstance.findUserById).toHaveBeenCalledTimes(2);
         expect(accountServiceInstance.doAccountTransfer).toHaveBeenCalledWith(defUser.bankAccount, defUser.bankAccount, amount);
     });
 

@@ -5,7 +5,7 @@ export interface CurrencyInterface {
 export class Currency {
     private _value: number;
     constructor(value: number) {
-        if (value === null || value < 0) {
+        if (value === null || value <= 0) {
             throw Error("Error: Currency can only contain a positive value");
         }
         this._value = value;

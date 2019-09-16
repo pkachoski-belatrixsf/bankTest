@@ -10,11 +10,9 @@ describe("Currency model tests", () => {
         expect(currency.value).toBe(10);
     });
 
-    test('Expects Currency instantiation to throw error on null', () => {
+    test('Expects Currency instantiation to throw error on invalid value', () => {
         expect(() =>  new Currency(null)).toThrowError();
-    });
-
-    test('Expects Currency instantiation to throw error on negative value', () => {
+        expect(() =>  new Currency(0)).toThrowError();
         expect(() =>  new Currency(-1)).toThrowError();
         expect(() =>  new Currency(-5)).toThrowError();
         expect(() =>  new Currency(-10)).toThrowError();
