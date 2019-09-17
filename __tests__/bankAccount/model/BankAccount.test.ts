@@ -23,7 +23,6 @@ describe("Bank account model tests", () => {
     test('Expects Bank Account to thow error on withdraw funds when account balance is less than withdraw value', () => {
         let bankAccount = new BankAccount();
         let withdrawValue = new Currency(5000);
-        expect(() => bankAccount.withdrawFunds(new Currency(0))).toThrowError();
         expect(() => bankAccount.withdrawFunds(withdrawValue)).toThrowError();
         bankAccount.depositFunds(new Currency(1000));
         expect(() => bankAccount.withdrawFunds(withdrawValue)).toThrowError();

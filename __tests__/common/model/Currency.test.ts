@@ -1,20 +1,12 @@
 import { Currency } from "../../../src/common/model/Currency";
 
 describe("Currency model tests", () => {
-    test('Expects Currency to get correct value', () => {
-        let currency = new Currency(1);
-        expect(currency.value).toBe(1);
-        currency = new Currency(5)
-        expect(currency.value).toBe(5);
-        currency = new Currency(10)
-        expect(currency.value).toBe(10);
+    test.each([[1,1], [5,5], [10,10]])('Expects Currency with %s to get %s', (currencyValue, expectedValue) => {
+        let currency = new Currency(currencyValue);
+        expect(currency.value).toBe(expectedValue);
     });
 
-    test('Expects Currency instantiation to throw error on invalid value', () => {
-        expect(() =>  new Currency(null)).toThrowError();
-        expect(() =>  new Currency(0)).toThrowError();
-        expect(() =>  new Currency(-1)).toThrowError();
-        expect(() =>  new Currency(-5)).toThrowError();
-        expect(() =>  new Currency(-10)).toThrowError();
+    test.each([null, 0, -1, -5, -10])('Expects Currency instantiation with %s to throw error on invalid value', (currencyValue) => {
+        expect(() =>  new Currency(currencyValue)).toThrowError();
     });
 });
